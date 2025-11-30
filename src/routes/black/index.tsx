@@ -1,13 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
+
+export const getUsers = createServerFn({
+  method: 'GET',
+}).handler(async () => {
+  return {users: ['Alice', 'Bob', 'Charlie', 'David', 'Eve']}
+})
+
 
 export const Route = createFileRoute('/black/')({
   component: RouteComponent,
-  loader: async () => {
-    const response = await fetch('http://localhost:3000/black/api/users')
-    const data = await response.json()
-
-    return data as {users: string[]}
-  }
+  loader: () => getUsers(),
 })
 
 function RouteComponent() {
