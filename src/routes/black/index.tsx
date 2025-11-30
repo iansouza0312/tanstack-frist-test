@@ -1,10 +1,13 @@
+import { db } from '@/db'
+import { users as usersTable } from '@/db/schema'
 import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 
 export const getUsers = createServerFn({
   method: 'GET',
 }).handler(async () => {
-  return {users: ['Alice', 'Bob', 'Charlie', 'David', 'Eve']}
+  const users = await db.select().from(usersTable)
+  return {users}
 })
 
 
